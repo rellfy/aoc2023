@@ -1,4 +1,4 @@
-mod part1;
+pub mod part1;
 mod part2;
 
 static INPUT: &str = include_str!("input.txt");

@@ -1,27 +1,36 @@
 type IsSymbol = fn(char) -> bool;
 
+#[derive(Clone)]
 pub struct Point {
     x: usize,
     y: usize,
 }
 
-pub fn solve(input: &str) -> u64 {
-    let symbols = get_symbol_points(input, is_any_symbol);
-    get_part_matrix(input, &symbols).into_iter().flat_map(|v| v).sum()
+pub struct Part {
+    number: u64,
+    symbol: Point
 }
 
-pub fn get_part_matrix(
+pub fn solve(input: &str) -> u64 {
+    let symbols = get_symbol_points(input, is_any_symbol);
+    get_all_parts(input, &symbols)
+        .into_iter()
+        .map(|p| p.number)
+        .sum()
+}
+
+pub fn get_all_parts(
     input: &str,
     symbols: &[Point]
-) -> Vec<Vec<u64>> {
+) -> Vec<Part> {
     input
         .lines()
         .enumerate()
-        .map(|(y, line)| get_part_numbers(line, y, &symbols))
+        .flat_map(|(y, line)| get_parts(line, y, &symbols))
         .collect()
 }
 
-fn get_part_numbers(line: &str, y: usize, symbols: &[Point]) -> Vec<u64> {
+fn get_parts(line: &str, y: usize, symbols: &[Point]) -> Vec<Part> {
     let mut chars = line.chars().enumerate();
     let mut parts = Vec::new();
     let mut should_skip_rest_of_part_number = false;
@@ -36,16 +45,19 @@ fn get_part_numbers(line: &str, y: usize, symbols: &[Point]) -> Vec<u64> {
             continue;
         }
         let point = Point { x, y };
-        if !is_part_number(point, symbols) {
+        let Some(symbol) = get_part_number_symbol(point, symbols) else {
             continue;
-        }
-        parts.push(get_complete_number_at_index(line, x));
+        };
+        parts.push(Part {
+            number: get_complete_number_at_index(line, x),
+            symbol,
+        });
         should_skip_rest_of_part_number = true;
     }
     parts
 }
 
-fn is_part_number(part: Point, symbols: &[Point]) -> bool {
+fn get_part_number_symbol(part: Point, symbols: &[Point]) -> Option<Point> {
     for symbol in symbols {
         let y_diff = (symbol.y as isize - part.y as isize).abs();
         if y_diff > 1 {
@@ -55,9 +67,9 @@ fn is_part_number(part: Point, symbols: &[Point]) -> bool {
         if x_diff > 1 {
             continue;
         }
-        return true;
+        return Some(symbol.clone());
     }
-    false
+    None
 }
 
 pub fn get_symbol_points(input: &str, is_symbol: IsSymbol) -> Vec<Point> {
@@ -76,6 +88,7 @@ pub fn get_symbol_points(input: &str, is_symbol: IsSymbol) -> Vec<Point> {
 fn is_any_symbol(c: char) -> bool {
     !c.is_ascii_digit() && c != '.'
 }
+
 
 fn get_complete_number_at_index(line: &str, index: usize) -> u64 {
     // Get adjacent digits from start to index.
