@@ -1,15 +1,14 @@
-use std::io::BufRead;
 use std::str::Split;
 
 const MAX_RED: u64 = 12;
 const MAX_GREEN: u64 = 13;
 const MAX_BLUE: u64 = 14;
 
-struct Game {
+pub struct Game {
     id: u64,
-    red: u64,
-    green: u64,
-    blue: u64
+    pub red: u64,
+    pub green: u64,
+    pub blue: u64
 }
 
 pub fn solve(input: &str) -> u64 {
@@ -22,7 +21,7 @@ pub fn solve(input: &str) -> u64 {
         .sum()
 }
 
-fn parse_games(input: &str) -> Vec<Game> {
+pub fn parse_games(input: &str) -> Vec<Game> {
     let lines = input.lines();
     let mut games = Vec::new();
     for line in lines {
