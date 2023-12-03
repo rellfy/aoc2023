@@ -6,5 +6,6 @@ edition = "2021"
 [features]
 default = []
 day1 = []
+day2 = []
 
 [dependencies]
