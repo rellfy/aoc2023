@@ -1,14 +1,14 @@
 type IsSymbol = fn(char) -> bool;
 
-#[derive(Clone)]
+#[derive(Clone, Eq, PartialEq, Hash)]
 pub struct Point {
     x: usize,
     y: usize,
 }
 
 pub struct Part {
-    number: u64,
-    symbol: Point
+    pub number: u64,
+    pub symbol: Point
 }
 
 pub fn solve(input: &str) -> u64 {
