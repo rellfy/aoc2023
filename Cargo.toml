@@ -7,5 +7,6 @@ edition = "2021"
 default = []
 day1 = []
 day2 = []
+day3 = []
 
 [dependencies]
