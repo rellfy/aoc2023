@@ -1,15 +1,24 @@
-struct Point {
+type IsSymbol = fn(char) -> bool;
+
+pub struct Point {
     x: usize,
     y: usize,
 }
 
 pub fn solve(input: &str) -> u64 {
-    let symbols = get_symbol_points(input);
+    let symbols = get_symbol_points(input, is_any_symbol);
+    get_part_matrix(input, &symbols).into_iter().flat_map(|v| v).sum()
+}
+
+pub fn get_part_matrix(
+    input: &str,
+    symbols: &[Point]
+) -> Vec<Vec<u64>> {
     input
         .lines()
         .enumerate()
-        .flat_map(|(y, line)| get_part_numbers(line, y, &symbols))
-        .sum()
+        .map(|(y, line)| get_part_numbers(line, y, &symbols))
+        .collect()
 }
 
 fn get_part_numbers(line: &str, y: usize, symbols: &[Point]) -> Vec<u64> {
@@ -51,7 +60,7 @@ fn is_part_number(part: Point, symbols: &[Point]) -> bool {
     false
 }
 
-fn get_symbol_points(input: &str) -> Vec<Point> {
+pub fn get_symbol_points(input: &str, is_symbol: IsSymbol) -> Vec<Point> {
     let mut points = Vec::new();
     for (y, line) in input.lines().enumerate() {
         for (x, c) in line.chars().enumerate() {
@@ -64,7 +73,7 @@ fn get_symbol_points(input: &str) -> Vec<Point> {
     points
 }
 
-fn is_symbol(c: char) -> bool {
+fn is_any_symbol(c: char) -> bool {
     !c.is_ascii_digit() && c != '.'
 }
 
