@@ -1,7 +1,7 @@
 mod part1;
 mod part2;
 
-pub static INPUT: &str = include_str!("input.txt");
+static INPUT: &str = include_str!("input.txt");
 
 pub fn run() {
     println!("part 1 result: {}", part1::solve(INPUT));
