@@ -4,6 +4,8 @@ mod day1;
 mod day2;
 #[cfg(feature = "day3")]
 mod day3;
+#[cfg(feature = "day4")]
+mod day4;
 
 fn main() {
     #[cfg(feature = "day1")]
@@ -12,4 +14,6 @@ fn main() {
     day2::run();
     #[cfg(feature = "day3")]
     day3::run();
+    #[cfg(feature = "day4")]
+    day4::run();
 }
