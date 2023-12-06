@@ -78,7 +78,7 @@ impl Map {
         for map in self.rows.iter() {
             let min = map.source;
             let max = map.source + map.length;
-            if input < min as i64 || input > max as i64 {
+            if input < min as i64 || input >= max as i64 {
                 continue;
             }
             let mapping = map.destination as i64 - map.source as i64;
