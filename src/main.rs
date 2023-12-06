@@ -11,11 +11,20 @@ mod day;
 #[cfg(feature = "day4")]
 #[path = "day4/mod.rs"]
 mod day;
+#[cfg(feature = "day5")]
+#[path = "day5/mod.rs"]
+mod day;
 
 fn main() {
     let (p1, p2) = day::run();
     println!("part 1 result: {p1}");
     println!("part 2 result: {p2}");
+    #[cfg(feature = "benchmark")]
+    run_benchmark();
+}
+
+#[cfg(feature = "benchmark")]
+fn run_benchmark() {
     let micros = benchmark(day::run, 1000);
     println!("benchmark: {micros} microseconds");
 }
