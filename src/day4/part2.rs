@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use crate::day4::part1::{get_card};
+use crate::day::part1::{get_card};
 
 #[derive(Default)]
 struct Copies {

@@ -1,19 +1,16 @@
 #[cfg(feature = "day1")]
-mod day1;
+#[path = "day1/mod.rs"]
+mod day;
 #[cfg(feature = "day2")]
-mod day2;
+#[path = "day2/mod.rs"]
+mod day;
 #[cfg(feature = "day3")]
-mod day3;
+#[path = "day3/mod.rs"]
+mod day;
 #[cfg(feature = "day4")]
-mod day4;
+#[path = "day4/mod.rs"]
+mod day;
 
 fn main() {
-    #[cfg(feature = "day1")]
-    day1::run();
-    #[cfg(feature = "day2")]
-    day2::run();
-    #[cfg(feature = "day3")]
-    day3::run();
-    #[cfg(feature = "day4")]
-    day4::run();
+    day::run();
 }

@@ -1,5 +1,3 @@
-use std::io::{BufRead};
-
 pub struct Card {
     pub id: usize,
     pub winning_numbers: Vec<u64>,

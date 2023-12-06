@@ -1,4 +1,4 @@
-use crate::day3::part1::{get_all_parts, get_symbol_points, Part, Point};
+use crate::day::part1::{get_all_parts, get_symbol_points, Part, Point};
 
 pub fn solve(input: &str) -> u64 {
     let gears = get_symbol_points(input, is_gear_symbol);
