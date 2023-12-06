@@ -12,5 +12,7 @@ mod day;
 mod day;
 
 fn main() {
-    day::run();
+    let (p1, p2) = day::run();
+    println!("part 1 result: {p1}");
+    println!("part 2 result: {p2}");
 }

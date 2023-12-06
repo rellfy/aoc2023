@@ -3,7 +3,6 @@ mod part2;
 
 static INPUT: &str = include_str!("input.txt");
 
-pub fn run() {
-    println!("part 1 result: {}", part1::solve(INPUT));
-    println!("part 2 result: {}", part2::solve(INPUT));
+pub fn run() -> (u64, u64) {
+    (part1::solve(INPUT), part2::solve(INPUT))
 }
