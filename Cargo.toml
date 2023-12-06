@@ -13,3 +13,4 @@ day5 = []
 benchmark = []
 
 [dependencies]
+rayon = "1.8.0"
