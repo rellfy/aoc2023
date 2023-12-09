@@ -32,6 +32,7 @@ fn run_benchmark() {
     println!("benchmark: {micros} microseconds");
 }
 
+#[cfg(feature = "benchmark")]
 fn benchmark<F>(func: F, iterations: u128) -> u128 where F: Fn() -> (u64, u64) {
     (0..iterations).map(|_| {
         let a = Instant::now();
