@@ -104,11 +104,9 @@ fn get_hand_type(hand: &Hand) -> HandType {
             continue;
         }
         if frequency == 5 || frequency + j_frequency == 5 {
-            j_frequency -= 5 - frequency;
             return HandType::FiveKind;
         }
         if frequency == 4 || frequency + j_frequency == 4 {
-            j_frequency -= 4 - frequency;
             return HandType::FourKind;
         }
         if frequency == 3 || frequency + j_frequency == 3 {
