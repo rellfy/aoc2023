@@ -1,12 +1,14 @@
+use std::fmt::Display;
+
 use crate::day::part1::{get_all_parts, get_symbol_points, Part, Point};
 
-pub fn solve(input: &str) -> u64 {
+pub fn solve(input: &str) -> impl Display {
     let gears = get_symbol_points(input, is_gear_symbol);
     let parts = get_all_parts(input, &gears);
     gears
         .iter()
         .map(|gear| calculate_gear_ratio(gear, &parts))
-        .sum()
+        .sum::<u64>()
 }
 
 fn calculate_gear_ratio(gear: &Point, parts: &[Part]) -> u64 {

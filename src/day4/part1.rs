@@ -1,10 +1,12 @@
+use std::fmt::Display;
+
 pub struct Card {
     pub id: usize,
     pub winning_numbers: Vec<u64>,
     pub matches: Vec<u64>,
 }
 
-pub fn solve(input: &str) -> u64 {
+pub fn solve(input: &str) -> impl Display {
     input
         .lines()
         .enumerate()
@@ -17,7 +19,7 @@ pub fn solve(input: &str) -> u64 {
                 2_u64.pow((matches as u32) - 1).try_into().unwrap()
             }
         })
-        .sum()
+        .sum::<u64>()
 }
 
 pub fn get_card(id: usize, line: &str) -> Card {
@@ -33,11 +35,14 @@ pub fn get_card(id: usize, line: &str) -> Card {
     Card {
         id,
         winning_numbers,
-        matches
+        matches,
     }
 }
 
-fn parse_numbers<'a, I>(split:  &mut I) -> Vec<u64> where I: Iterator<Item = &'a str> {
+fn parse_numbers<'a, I>(split: &mut I) -> Vec<u64>
+where
+    I: Iterator<Item = &'a str>,
+{
     split
         .next()
         .unwrap()

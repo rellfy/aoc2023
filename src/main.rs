@@ -41,12 +41,14 @@ fn main() {
 
 #[cfg(feature = "benchmark")]
 fn run_benchmark() {
-    let micros = benchmark(day::run, 1000);
+    let micros = benchmark(|| {
+        day::run();
+    }, 1000);
     println!("benchmark: {micros} microseconds");
 }
 
 #[cfg(feature = "benchmark")]
-fn benchmark<F>(func: F, iterations: u128) -> u128 where F: Fn() -> (u64, u64) {
+fn benchmark<F>(func: F, iterations: u128) -> u128 where F: Fn() -> () {
     (0..iterations).map(|_| {
         let a = Instant::now();
         func();

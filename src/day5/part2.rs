@@ -1,10 +1,14 @@
 use crate::day::part1::Maps;
 use rayon::prelude::*;
+use std::fmt::Display;
 
-pub fn solve(input: &str) -> u64 {
+pub fn solve(input: &str) -> impl Display {
     let mut lines = input.lines();
     let mut seed_input = lines
-        .next().unwrap().split(" ").skip(1)
+        .next()
+        .unwrap()
+        .split(" ")
+        .skip(1)
         .map(|str| str.parse::<u64>().unwrap());
     let mut seed_ranges = Vec::<(u64, u64)>::new();
     while let Some(start) = seed_input.next() {

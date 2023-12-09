@@ -1,5 +1,7 @@
+use std::fmt::Display;
+
 pub struct Maps {
-    maps: Vec<Map>
+    maps: Vec<Map>,
 }
 
 #[derive(Default)]
@@ -14,10 +16,13 @@ struct MapRow {
     length: u64,
 }
 
-pub fn solve(input: &str) -> u64 {
+pub fn solve(input: &str) -> impl Display {
     let mut lines = input.lines();
     let seeds = lines
-        .next().unwrap().split(" ").skip(1)
+        .next()
+        .unwrap()
+        .split(" ")
+        .skip(1)
         .map(|str| str.parse::<u64>().unwrap());
     let maps = Maps::parse(lines.skip(2));
     let mut min_location: i64 = i64::MAX;
@@ -31,7 +36,10 @@ pub fn solve(input: &str) -> u64 {
 }
 
 impl Maps {
-    pub fn parse<'a, I>(mut lines: I) -> Self where I: Iterator<Item = &'a str> {
+    pub fn parse<'a, I>(mut lines: I) -> Self
+    where
+        I: Iterator<Item = &'a str>,
+    {
         let mut maps = Vec::new();
         let mut i = 0;
         let mut should_skip_line = false;
@@ -59,9 +67,7 @@ impl Maps {
                 length: row.next().unwrap(),
             });
         }
-        Self {
-            maps
-        }
+        Self { maps }
     }
 
     pub fn get_output(&self, input: i64) -> i64 {

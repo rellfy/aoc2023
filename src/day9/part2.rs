@@ -1,11 +1,12 @@
+use std::fmt::Display;
 
-pub fn solve(input: &str) -> u64 {
+pub fn solve(input: &str) -> impl Display {
     input
         .lines()
         .map(|line| line.split(' ').map(|v| v.parse::<i64>().unwrap()).collect::<Vec<i64>>())
         .map(|values| find_next_value(values))
         .map(|a| a)
-        .sum::<i64>() as u64
+        .sum::<i64>()
 }
 
 fn find_next_value(values: Vec<i64>) -> i64 {

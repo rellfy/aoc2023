@@ -1,9 +1,11 @@
+use std::fmt::Display;
+
 static NUMBERS: [&str; 9] = [
-    "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
+    "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
 ];
 
-pub fn solve(input: &str) -> u64 {
-    input.lines().map(|line| get_line_number(line)).sum()
+pub fn solve(input: &str) -> impl Display {
+    input.lines().map(|line| get_line_number(line)).sum::<u64>()
 }
 
 fn get_line_number(line: &str) -> u64 {

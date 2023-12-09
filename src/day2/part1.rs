@@ -1,3 +1,4 @@
+use std::fmt::Display;
 use std::str::Split;
 
 const MAX_RED: u64 = 12;
@@ -8,17 +9,15 @@ pub struct Game {
     id: u64,
     pub red: u64,
     pub green: u64,
-    pub blue: u64
+    pub blue: u64,
 }
 
-pub fn solve(input: &str) -> u64 {
+pub fn solve(input: &str) -> impl Display {
     parse_games(input)
         .into_iter()
-        .filter(|g|
-            g.red <= MAX_RED && g.green <= MAX_GREEN && g.blue <= MAX_BLUE
-        )
+        .filter(|g| g.red <= MAX_RED && g.green <= MAX_GREEN && g.blue <= MAX_BLUE)
         .map(|g| g.id)
-        .sum()
+        .sum::<u64>()
 }
 
 pub fn parse_games(input: &str) -> Vec<Game> {

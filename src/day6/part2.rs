@@ -1,6 +1,7 @@
 use crate::day::part1::calculate_win_possibilities;
+use std::fmt::Display;
 
-pub fn solve(input: &str) -> u64 {
+pub fn solve(input: &str) -> impl Display {
     let mut lines = input.lines();
     let time = parse_line(lines.next().unwrap());
     let distance = parse_line(lines.next().unwrap());

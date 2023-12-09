@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 type IsSymbol = fn(char) -> bool;
 
 #[derive(Clone, Eq, PartialEq, Hash)]
@@ -8,21 +10,18 @@ pub struct Point {
 
 pub struct Part {
     pub number: u64,
-    pub symbol: Point
+    pub symbol: Point,
 }
 
-pub fn solve(input: &str) -> u64 {
+pub fn solve(input: &str) -> impl Display {
     let symbols = get_symbol_points(input, is_any_symbol);
     get_all_parts(input, &symbols)
         .into_iter()
         .map(|p| p.number)
-        .sum()
+        .sum::<u64>()
 }
 
-pub fn get_all_parts(
-    input: &str,
-    symbols: &[Point]
-) -> Vec<Part> {
+pub fn get_all_parts(input: &str, symbols: &[Point]) -> Vec<Part> {
     input
         .lines()
         .enumerate()
@@ -89,7 +88,6 @@ fn is_any_symbol(c: char) -> bool {
     !c.is_ascii_digit() && c != '.'
 }
 
-
 fn get_complete_number_at_index(line: &str, index: usize) -> u64 {
     // Get adjacent digits from start to index.
     let mut backward_chars = line.chars().rev().skip(line.len() - index);
@@ -110,5 +108,7 @@ fn get_complete_number_at_index(line: &str, index: usize) -> u64 {
         }
         forward_digits.push(c);
     }
-    format!("{backward_digits}{forward_digits}").parse().unwrap()
+    format!("{backward_digits}{forward_digits}")
+        .parse()
+        .unwrap()
 }
