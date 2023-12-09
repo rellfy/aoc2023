@@ -10,7 +10,7 @@ pub fn solve(input: &str) -> i64 {
 
 fn find_next_value(values: Vec<i64>) -> i64 {
     let mut diffs = vec![values];
-    while diffs.last().unwrap().iter().sum::<i64>() != 0 {
+    while diffs.last().unwrap().into_iter().any(|v| *v != 0) {
         let last_diff = diffs.last().unwrap();
         let new_diff = calculate_diff(last_diff);
         diffs.push(new_diff);
