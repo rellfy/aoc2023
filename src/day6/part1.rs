@@ -1,11 +1,15 @@
 
 pub fn solve(input: &str) -> u64 {
     let mut lines = input.lines();
-    let times = lines.next().unwrap().split(' ').filter_map(|n| n.parse::<i64>().ok());
-    let distances = lines.next().unwrap().split(' ').filter_map(|n| n.parse::<i64>().ok());
+    let times = parse_line(lines.next().unwrap());
+    let distances = parse_line(lines.next().unwrap());
     times.zip(distances)
         .map(|(time, distance)| calculate_win_possibilities(time, distance))
         .product::<i64>() as u64
+}
+
+fn parse_line(line: &str) -> impl Iterator<Item = i64> + '_ {
+    line.split(' ').filter_map(|n| n.parse::<i64>().ok())
 }
 
 pub fn calculate_win_possibilities(time: i64, distance: i64) -> i64 {
