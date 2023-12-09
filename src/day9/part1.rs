@@ -3,7 +3,11 @@ use std::fmt::Display;
 pub fn solve(input: &str) -> impl Display {
     input
         .lines()
-        .map(|line| line.split(' ').map(|v| v.parse::<i64>().unwrap()).collect::<Vec<i64>>())
+        .map(|line| {
+            line.split(' ')
+                .map(|v| v.parse::<i64>().unwrap())
+                .collect::<Vec<i64>>()
+        })
         .map(|values| find_next_value(values))
         .map(|a| a)
         .sum::<i64>()
@@ -16,7 +20,10 @@ fn find_next_value(values: Vec<i64>) -> i64 {
         let new_diff = calculate_diff(last_diff);
         diffs.push(new_diff);
     }
-    diffs.into_iter().map(|diff| diff.last().cloned().unwrap()).sum()
+    diffs
+        .into_iter()
+        .map(|diff| diff.last().cloned().unwrap())
+        .sum()
 }
 
 fn calculate_diff(values: &[i64]) -> Vec<i64> {

@@ -1,5 +1,5 @@
 #[cfg(feature = "benchmark")]
-use std::time::{Instant};
+use std::time::Instant;
 #[cfg(feature = "day1")]
 #[path = "day1/mod.rs"]
 mod day;
@@ -41,17 +41,26 @@ fn main() {
 
 #[cfg(feature = "benchmark")]
 fn run_benchmark() {
-    let micros = benchmark(|| {
-        day::run();
-    }, 1000);
+    let micros = benchmark(
+        || {
+            day::run();
+        },
+        1000,
+    );
     println!("benchmark: {micros} microseconds");
 }
 
 #[cfg(feature = "benchmark")]
-fn benchmark<F>(func: F, iterations: u128) -> u128 where F: Fn() -> () {
-    (0..iterations).map(|_| {
-        let a = Instant::now();
-        func();
-        Instant::now().duration_since(a).as_micros()
-    }).sum::<u128>() / iterations
+fn benchmark<F>(func: F, iterations: u128) -> u128
+where
+    F: Fn() -> (),
+{
+    (0..iterations)
+        .map(|_| {
+            let a = Instant::now();
+            func();
+            Instant::now().duration_since(a).as_micros()
+        })
+        .sum::<u128>()
+        / iterations
 }
