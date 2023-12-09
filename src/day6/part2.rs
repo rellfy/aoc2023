@@ -4,7 +4,7 @@ pub fn solve(input: &str) -> u64 {
     let mut lines = input.lines();
     let time = parse_line(lines.next().unwrap());
     let distance = parse_line(lines.next().unwrap());
-    calculate_win_possibilities(time, distance) as u64
+    calculate_win_possibilities(time, distance + 1) as u64
 }
 
 fn parse_line(line: &str) -> i64 {

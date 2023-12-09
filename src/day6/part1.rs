@@ -13,7 +13,7 @@ fn parse_line(line: &str) -> impl Iterator<Item = i64> + '_ {
 }
 
 pub fn calculate_win_possibilities(time: i64, distance: i64) -> i64 {
-    let (max, min) = solve_for_tb(time, 0, distance);
+    let (max, min) = solve_for_tb(time, 0, distance + 1);
     max.ceil() as i64 - min.floor() as i64 - 1
 }
 
