@@ -1,11 +1,11 @@
 
-pub fn solve(input: &str) -> i64 {
+pub fn solve(input: &str) -> u64 {
     input
         .lines()
         .map(|line| line.split(' ').map(|v| v.parse::<i64>().unwrap()).collect::<Vec<i64>>())
         .map(|values| find_next_value(values))
         .map(|a| a)
-        .sum::<i64>()
+        .sum::<i64>() as u64
 }
 
 fn find_next_value(values: Vec<i64>) -> i64 {
@@ -15,7 +15,6 @@ fn find_next_value(values: Vec<i64>) -> i64 {
         let new_diff = calculate_diff(last_diff);
         diffs.push(new_diff);
     }
-    diffs.iter().for_each(|d| println!("{:?}", d));
     diffs.into_iter().map(|diff| diff.last().cloned().unwrap()).sum()
 }
 

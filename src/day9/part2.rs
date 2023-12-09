@@ -1,4 +1,4 @@
 
-pub fn solve(input: &str) -> i64 {
+pub fn solve(input: &str) -> u64 {
     0
 }
