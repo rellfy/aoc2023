@@ -1,3 +1,4 @@
+#[cfg(feature = "benchmark")]
 use std::time::{Instant};
 #[cfg(feature = "day1")]
 #[path = "day1/mod.rs"]
