@@ -14,6 +14,9 @@ mod day;
 #[cfg(feature = "day5")]
 #[path = "day5/mod.rs"]
 mod day;
+#[cfg(feature = "day6")]
+#[path = "day6/mod.rs"]
+mod day;
 
 fn main() {
     let (p1, p2) = day::run();
