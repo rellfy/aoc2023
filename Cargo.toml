@@ -16,6 +16,7 @@ day8 = []
 day9 = []
 day10 = []
 benchmark = []
+debug = []
 
 [dependencies]
 rayon = "1.8.0"

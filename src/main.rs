@@ -31,6 +31,11 @@ mod day;
 #[path = "day10/mod.rs"]
 mod day;
 
+#[cfg(not(feature = "debug"))]
+pub const IS_DEBUG: bool = false;
+#[cfg(feature = "debug")]
+pub const IS_DEBUG: bool = true;
+
 fn main() {
     let (p1, p2) = day::run();
     println!("part 1 result: {p1}");
