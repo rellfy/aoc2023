@@ -1,20 +1,20 @@
 use crate::IS_DEBUG;
 use std::fmt::Display;
 
-#[derive(Debug)]
-struct Symbol {
-    point: Point,
-    c: char,
-}
-
 #[derive(Debug, Clone, Copy)]
-struct Point {
-    x: isize,
-    y: isize,
+pub struct Symbol {
+    pub point: Point,
+    pub c: char,
 }
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
-enum Connection {
+pub struct Point {
+    pub x: isize,
+    pub y: isize,
+}
+
+#[derive(Debug, Clone, Copy, Eq, PartialEq)]
+pub enum Connection {
     Top,
     Bottom,
     Right,
@@ -22,9 +22,44 @@ enum Connection {
     Any,
 }
 
-type Symbols = Vec<Vec<Symbol>>;
+pub type Symbols = Vec<Vec<Symbol>>;
 
 pub fn solve(input: &str) -> impl Display {
+    let (_, _, distance, _) = solve_outputs(input);
+    distance
+}
+
+pub fn solve_outputs(input: &str) -> (Symbols, [[char; 140]; 140], u64, Vec<Point>) {
+    let (symbols, initial_point) = get_symbols(input);
+    let (mut symbol, mut from_connection) =
+        get_next_symbol(0, Connection::Any, &initial_point, &symbols);
+    let mut map = [[' '; 140]; 140];
+    let mut points = Vec::new();
+    map[symbol.point.y as usize][symbol.point.x as usize] = symbol.c;
+    points.push(initial_point);
+    points.push(symbol.point);
+    let mut steps: u64 = 1;
+    while symbol.c != 'S' {
+        let (s, c) = get_next_symbol(steps, from_connection, &symbol.point, &symbols);
+        symbol = s;
+        from_connection = c;
+        map[symbol.point.y as usize][symbol.point.x as usize] = symbol.c;
+        steps += 1;
+        points.push(symbol.point);
+    }
+    if IS_DEBUG {
+        for y in map {
+            println!("");
+            for char in y {
+                print!("{char}");
+            }
+        }
+        println!("");
+    }
+    (symbols, map, steps / 2, points)
+}
+
+pub fn get_symbols(input: &str) -> (Symbols, Point) {
     let mut initial_point: Option<Point> = None;
     let symbols = input
         .lines()
@@ -45,34 +80,10 @@ pub fn solve(input: &str) -> impl Display {
                 .collect::<Vec<_>>()
         })
         .collect::<Vec<_>>();
-    let (mut symbol, mut from_connection) = get_next_symbol(
-        0,
-        Connection::Any,
-        &initial_point.as_ref().unwrap(),
-        &symbols,
-    );
-    let mut map = [[' '; 140]; 140];
-    map[symbol.point.y as usize][symbol.point.x as usize] = symbol.c;
-    let mut steps: u64 = 1;
-    while symbol.c != 'S' {
-        let (s, c) = get_next_symbol(steps, from_connection, &symbol.point, &symbols);
-        symbol = s;
-        from_connection = c;
-        map[symbol.point.y as usize][symbol.point.x as usize] = symbol.c;
-        steps += 1;
-    }
-    if IS_DEBUG {
-        for y in map {
-            println!("");
-            for char in y {
-                print!("{char}");
-            }
-        }
-    }
-    steps / 2
+    (symbols, initial_point.unwrap())
 }
 
-fn get_next_symbol<'a>(
+pub fn get_next_symbol<'a>(
     step: u64,
     from_connection: Connection,
     from_point: &Point,
@@ -184,6 +195,7 @@ fn get_free_connection(from_connection: Connection, from_symbol: &Symbol) -> Con
 fn char_connections(c: char) -> Option<[Connection; 2]> {
     Some(match c {
         'S' => [Connection::Any, Connection::Any],
+        '_' => [Connection::Any, Connection::Any],
         '|' => [Connection::Top, Connection::Bottom],
         '-' => [Connection::Left, Connection::Right],
         'L' => [Connection::Top, Connection::Right],
@@ -196,11 +208,12 @@ fn char_connections(c: char) -> Option<[Connection; 2]> {
     })
 }
 
-fn get_surrounding_coordinates(p: &Point) -> [Point; 4] {
+/// Returns top, right, bottom, left.
+pub fn get_surrounding_coordinates(p: &Point) -> [Point; 4] {
     [
-        Point { x: p.x + 1, y: p.y },
-        Point { x: p.x - 1, y: p.y },
-        Point { x: p.x, y: p.y + 1 },
         Point { x: p.x, y: p.y - 1 },
+        Point { x: p.x + 1, y: p.y },
+        Point { x: p.x, y: p.y + 1 },
+        Point { x: p.x - 1, y: p.y },
     ]
 }
